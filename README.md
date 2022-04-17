@@ -19,6 +19,18 @@ And repeat
 yarn start
 ```
 
+To run Test
+
+```
+yarn test
+```
+
+or
+
+```
+yarn test:cover
+```
+
 End with an example of getting some data out of the system or using it for a little demo
 
 ## Built With :computer:
