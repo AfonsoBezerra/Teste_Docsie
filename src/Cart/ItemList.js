@@ -1,8 +1,10 @@
 import React, { useContext, useEffect, useCallback } from "react";
-import { getProducts, addToCart } from "../Actions";
-
-
+import { getProducts, addToCart, setProducts } from "../Actions";
+import { getDataApi } from "../services/getDataApi";
 import { store } from "../Store";
+
+const URL_DATA_FeTCH = () =>
+  "https://run.mocky.io/v3/769972bd-b240-4e45-b409-69898c096b8d";
 
 export default function ItemList() {
   const {
@@ -11,6 +13,15 @@ export default function ItemList() {
   } = useContext(store);
   useEffect(() => {
     dispatch(getProducts());
+    async function fetchData() {
+      try {
+        const dataFetch = await getDataApi(URL_DATA_FeTCH());
+        dispatch(setProducts(dataFetch.data));
+      } catch {
+        console.log("Error in Fetch");
+      }
+    }
+    fetchData();
   }, [dispatch]);
   const onAddToCart = useCallback(
     (product) => {
