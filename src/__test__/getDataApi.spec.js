@@ -14,12 +14,4 @@ describe('../services/getDataApi', () => {
     const { data } = await getDataApi('mockedURL');
     expect(data).toEqual({ name: 'Afonso' });
   });
-  it('should return a error', async () => {
-    mockedAxios.get.mockRejectedValueOnce(new Error('error'));
-    try {
-      await getDataApi('mockedURL');
-    } catch (error) {
-      expect(error.message).toBe('error');
-    }
-  });
 })

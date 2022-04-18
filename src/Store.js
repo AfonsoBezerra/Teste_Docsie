@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useReducer } from "react";
-import { getDataApi } from "./services/getDataApi";
 import { getProducts, setProducts, addToCart, deleteCart } from "./Actions";
-import * as uuid from "uuid";
+import { getDataApi } from "./services/getDataApi";
+
 const initialState = {
   total: [],
   cart: [],
@@ -24,6 +24,7 @@ export const AppContext = ({ children }) => {
     }
   }
 
+
   const [state, dispatch] = useReducer((state, action) => {
     switch (action.type) {
       case getProducts.type: {
@@ -42,7 +43,7 @@ export const AppContext = ({ children }) => {
             description: action.payload.description,
             name: action.payload.name,
             price: action.payload.price,
-            id: uuid.v4()
+            id: window.crypto.randomUUID()
           }
         ]
         state.cart.forEach((product) => {
@@ -50,7 +51,7 @@ export const AppContext = ({ children }) => {
             description: product.description,
             name: product.name,
             price: product.price,
-            id: uuid.v4()
+            id: window.crypto.randomUUID()
           }
           cartsWithNewId.push(productWithNewId)
         })
@@ -78,9 +79,10 @@ export const AppContext = ({ children }) => {
     }
   }, initialState);
 
+
   useEffect(() => {
     fetchData();
-  }, []);
+  })
 
   return <Provider value={{ state, dispatch }}>{children}</Provider>;
 };
